@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"net/http"
+	"time"
+
+	"github.com/sirupsen/logrus"
+)
 
 func main() {
-	fmt.Println("hello world")
+	logrus.WithFields(logrus.Fields{
+		"time": time.Now(),
+	}).Info("Server started!")
+	if err := http.ListenAndServe("7272", nil); err != nil {
+		logrus.Fatal("Server is down!")
+	}
 }
