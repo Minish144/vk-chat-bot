@@ -1,17 +1,18 @@
 package main
 
 import (
-	"net/http"
 	"time"
+	server "vk-chat-bot/src"
 
 	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	logrus.WithFields(logrus.Fields{
-		"time": time.Now(),
-	}).Info("Server started!")
-	if err := http.ListenAndServe("7272", nil); err != nil {
-		logrus.Fatal("Server is down!")
+	if err := server.Init(); err != nil {
+		logrus.WithFields(logrus.Fields{
+			"time":  time.Now().Format("2-01-2006 15:04:05"),
+			"error": err.Error(),
+		}).Fatal("Server is down!")
 	}
+
 }
