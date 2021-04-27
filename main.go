@@ -14,5 +14,4 @@ func main() {
 			"error": err.Error(),
 		}).Fatal("Server is down!")
 	}
-
 }
