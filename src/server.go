@@ -6,13 +6,15 @@ import (
 	"vk-chat-bot/src/utils"
 
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
-func Init(port *string) error {
+func Init() error {
+	serverPort := viper.GetString("vk.port")
 	logrus.WithFields(logrus.Fields{
 		"time": time.Now().Format(utils.TimeFormat),
 	}).Info(
-		"Server started on " + *port + "!",
+		"Server started on " + serverPort + "!",
 	)
-	return http.ListenAndServe(":"+*port, nil)
+	return http.ListenAndServe(":"+serverPort, nil)
 }

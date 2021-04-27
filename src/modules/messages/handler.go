@@ -2,11 +2,34 @@ package messages
 
 import (
 	"context"
-	"log"
+	"fmt"
 
+	"github.com/SevereCloud/vksdk/v2/api"
 	"github.com/SevereCloud/vksdk/v2/events"
 )
 
-func Handler(ctx context.Context, obj events.MessageNewObject) {
-	log.Print(obj.Message.Text)
+var vkApi *api.VK = nil
+
+func Init(vk *api.VK) error {
+	vkApi = vk
+	params := api.Params{
+		"user_ids": []int{1},
+	}
+	_, err := vkApi.UsersGet(params)
+	return err
+}
+
+func MessageNewHandler(ctx context.Context, obj events.MessageNewObject) {
+	fmt.Println("ID: ", obj.Message.ID)
+	conversationMessageHandler(&obj)
+}
+
+func conversationMessageHandler(obj *events.MessageNewObject) {
+	msg := (*obj).Message
+	// client := (*obj).ClientInfo
+	fmt.Printf("%+v\n-----\n", msg)
+}
+
+func personalMessageHandler(obj *events.MessageNewObject) {
+	// TODO
 }

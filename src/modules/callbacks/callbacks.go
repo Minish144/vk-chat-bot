@@ -8,6 +8,6 @@ import (
 
 func Init() *callback.Callback {
 	callback := callback.NewCallback()
-	callback.MessageNew(messages.Handler)
+	callback.MessageNew(messages.MessageNewHandler)
 	return callback
 }

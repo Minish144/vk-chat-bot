@@ -5,6 +5,7 @@ import (
 	"time"
 	server "vk-chat-bot/src"
 	"vk-chat-bot/src/modules/callbacks"
+	"vk-chat-bot/src/modules/messages"
 	"vk-chat-bot/src/modules/vk"
 	"vk-chat-bot/src/utils"
 
@@ -16,20 +17,33 @@ import (
 func main() {
 	loadConfig()
 
-	vk.Init()
+	// VK API initialization
+	vkapi := vk.Init()
 	logrus.WithFields(logrus.Fields{
 		"time": time.Now().Format(utils.TimeFormat),
 	}).Info("VK started!")
 
+	// VK callbacks initialization
 	cb := callbacks.Init()
 	logrus.WithFields(logrus.Fields{
 		"time": time.Now().Format(utils.TimeFormat),
 	}).Info("Callback server started!")
 
-	http.HandleFunc("/callback", cb.HandleFunc)
+	// VK messages hanlders initialization
+	if err := messages.Init(vkapi); err != nil {
+		logrus.WithFields(logrus.Fields{
+			"time":  time.Now().Format(utils.TimeFormat),
+			"error": err.Error(),
+		}).Error("Failed to init!")
+	} else {
+		logrus.WithFields(logrus.Fields{
+			"time": time.Now().Format(utils.TimeFormat),
+		}).Info("Messages handlers module start!")
+	}
 
-	serverPort := viper.GetString("vk.port")
-	if err := server.Init(&serverPort); err != nil {
+	// Server making
+	http.HandleFunc("/callback", cb.HandleFunc)
+	if err := server.Init(); err != nil {
 		logrus.WithFields(logrus.Fields{
 			"time":  time.Now().Format(utils.TimeFormat),
 			"error": err.Error(),
