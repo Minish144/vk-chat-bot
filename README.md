@@ -38,3 +38,6 @@ func personalMessageHandler(obj *events.MessageNewObject) {
 	fmt.Println("Personal message received!")
 }
 ```
+
+### **6.** Linking group and server app
+So the very last step is to link your project and your group, [that's how you do it](https://vk.com/dev/callback_api)
