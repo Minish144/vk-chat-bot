@@ -1,7 +1,13 @@
 package callbacks
 
-import "github.com/SevereCloud/vksdk/v2/callback"
+import (
+	"vk-chat-bot/src/modules/messages"
 
-func Init() {
-	cb := callback.NewCallback()
+	"github.com/SevereCloud/vksdk/v2/callback"
+)
+
+func Init() *callback.Callback {
+	callback := callback.NewCallback()
+	callback.MessageNew(messages.Handler)
+	return callback
 }

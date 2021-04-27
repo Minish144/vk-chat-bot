@@ -8,9 +8,11 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func Init() error {
+func Init(port *string) error {
 	logrus.WithFields(logrus.Fields{
 		"time": time.Now().Format(utils.TimeFormat),
-	}).Info("Server started!")
-	return http.ListenAndServe(":7272", nil)
+	}).Info(
+		"Server started on " + *port + "!",
+	)
+	return http.ListenAndServe(":"+*port, nil)
 }

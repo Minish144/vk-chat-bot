@@ -1,9 +1,10 @@
 package main
 
 import (
-	"fmt"
+	"net/http"
 	"time"
 	server "vk-chat-bot/src"
+	"vk-chat-bot/src/modules/callbacks"
 	"vk-chat-bot/src/modules/vk"
 	"vk-chat-bot/src/utils"
 
@@ -15,13 +16,20 @@ import (
 func main() {
 	loadConfig()
 
-	vkApi := vk.Init()
-	fmt.Println(vkApi)
+	vk.Init()
 	logrus.WithFields(logrus.Fields{
 		"time": time.Now().Format(utils.TimeFormat),
 	}).Info("VK started!")
 
-	if err := server.Init(); err != nil {
+	cb := callbacks.Init()
+	logrus.WithFields(logrus.Fields{
+		"time": time.Now().Format(utils.TimeFormat),
+	}).Info("Callback server started!")
+
+	http.HandleFunc("/callback", cb.HandleFunc)
+
+	serverPort := viper.GetString("vk.port")
+	if err := server.Init(&serverPort); err != nil {
 		logrus.WithFields(logrus.Fields{
 			"time":  time.Now().Format(utils.TimeFormat),
 			"error": err.Error(),
