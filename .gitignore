@@ -15,8 +15,9 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-### Go Patch ###
+# Go Patch #
 /vendor/
 /Godeps/
 
-# End of https://www.toptal.com/developers/gitignore/api/go
+# Config
+config.yml
