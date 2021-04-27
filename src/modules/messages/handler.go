@@ -8,7 +8,7 @@ import (
 	"github.com/SevereCloud/vksdk/v2/events"
 )
 
-var vkApi *api.VK = nil
+var vkApi *api.VK
 
 func Init(vk *api.VK) error {
 	vkApi = vk
@@ -29,13 +29,13 @@ func MessageNewHandler(ctx context.Context, obj events.MessageNewObject) {
 }
 
 func conversationMessageHandler(obj *events.MessageNewObject) {
-	msg := (*obj).Message
-	client := (*obj).ClientInfo
-	fmt.Println("Conversation message received!: ", msg, client)
+	// msg := (*obj).Message
+	// client := (*obj).ClientInfo
+	fmt.Println("Conversation message received!")
 }
 
 func personalMessageHandler(obj *events.MessageNewObject) {
-	msg := (*obj).Message
-	client := (*obj).ClientInfo
-	fmt.Println("Personal message received!: ", msg, client)
+	// msg := (*obj).Message
+	// client := (*obj).ClientInfo
+	fmt.Println("Personal message received!")
 }

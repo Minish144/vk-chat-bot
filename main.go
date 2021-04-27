@@ -38,7 +38,7 @@ func main() {
 	} else {
 		logrus.WithFields(logrus.Fields{
 			"time": time.Now().Format(utils.TimeFormat),
-		}).Info("Messages handlers module start!")
+		}).Info("Messages handlers module started!")
 	}
 
 	// Server making
