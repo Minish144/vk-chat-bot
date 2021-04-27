@@ -2,6 +2,7 @@ package messages
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/SevereCloud/vksdk/v2/api"
 	"github.com/SevereCloud/vksdk/v2/events"
@@ -28,10 +29,13 @@ func MessageNewHandler(ctx context.Context, obj events.MessageNewObject) {
 }
 
 func conversationMessageHandler(obj *events.MessageNewObject) {
-	// msg := (*obj).Message
-	// client := (*obj).ClientInfo
+	msg := (*obj).Message
+	client := (*obj).ClientInfo
+	fmt.Println("Conversation message received!: ", msg, client)
 }
 
 func personalMessageHandler(obj *events.MessageNewObject) {
-	// TODO
+	msg := (*obj).Message
+	client := (*obj).ClientInfo
+	fmt.Println("Personal message received!: ", msg, client)
 }
