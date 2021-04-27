@@ -2,7 +2,6 @@ package messages
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/SevereCloud/vksdk/v2/api"
 	"github.com/SevereCloud/vksdk/v2/events"
@@ -20,14 +19,17 @@ func Init(vk *api.VK) error {
 }
 
 func MessageNewHandler(ctx context.Context, obj events.MessageNewObject) {
-	fmt.Println("ID: ", obj.Message.ID)
-	conversationMessageHandler(&obj)
+	if obj.Message.ID == 0 {
+		conversationMessageHandler(&obj)
+	} else {
+		personalMessageHandler(&obj)
+	}
+
 }
 
 func conversationMessageHandler(obj *events.MessageNewObject) {
-	msg := (*obj).Message
+	// msg := (*obj).Message
 	// client := (*obj).ClientInfo
-	fmt.Printf("%+v\n-----\n", msg)
 }
 
 func personalMessageHandler(obj *events.MessageNewObject) {
